@@ -109,6 +109,8 @@ input {
 	color: #a2bdd8;
 	font-size: 0.8em;
 	border-radius: 5px;
+	text-align: center;
+	width: 150px;
 }
 #groceryTable {
 	margin: 0 auto;
