@@ -8,13 +8,13 @@
 				<th>Aantal</th>
 				<th>Subtotaal</th>
 			</tr>
-			<!--
-			<tr v-for="product in products" :key="products">
+			<tr v-for="product in products" :key="product">
 				<td>{{Name}}</td>
 				<td>{{value}}</td>
 				<td><input v-model="amount" type="number" value="0" /></td>
-				<td>{{subtotal}}</td>
+				<td>{{subTotal}}</td>
 			</tr>
+			<!--
 			<tr>
 				<td>Brood</td>
 				<td>{{value[0]}}</td>
@@ -51,19 +51,24 @@
 <script>
 export default {
 	name: "GroceryList",
-	data: 
+	data() 
 	{
-		products: {
-			name: ["Brood", "Broccoli", "Krentebollen", "Noten"],
-			value: [1.00, 0.99, 1.49, 0.99]
+		return {
+			products: {
+				name: ["Brood", "Broccoli", "Krentebollen", "Noten"],
+				value: [1.00, 0.99, 1.49, 0.99],
+				amount: 0
+			}
 		}
-  	},
-  	methods: {
-		calculateCost() 
+	},
+	methods: {
+		subTotal() 
 		{
-			return value[i] * price;
+			let amount;
+			let value;
+			return value * amount;
 		}
-  	}
+	}
 };
 
 </script>
