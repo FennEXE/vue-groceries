@@ -13,7 +13,8 @@
 				
 				<td>{{product.name}}</td>
 				<td>{{product.value.toFixed(2)}}</td>
-				<td><input v-model="product.amount" type="number" value="0" min="0" /></td>
+				<td><input v-model="product.amount" type="number" value="0" min="0" oninput="this.value = 
+ !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : null" /></td>
 				<td>{{subTotal(product.value, product.amount)}}</td>
 			</tr>
 			<tr>
