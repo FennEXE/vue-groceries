@@ -12,7 +12,7 @@
 				<td>{{Name}}</td>
 				<td>{{value}}</td>
 				<td><input v-model="amount" type="number" value="0" /></td>
-				<td>{{subTotal}}</td>
+				<td>{{subTotal()}}</td>
 			</tr>
 			<!--
 			<tr>
@@ -54,11 +54,28 @@ export default {
 	data() 
 	{
 		return {
-			products: {
-				name: ["Brood", "Broccoli", "Krentebollen", "Noten"],
-				value: [1.00, 0.99, 1.49, 0.99],
-				amount: 0
-			}
+			products: [
+				{
+					name: "Brood",
+					value: 1.00,
+					amount: 0
+				},
+				{
+					name: "Broccoli",
+					value: 0.79,
+					amount: 0
+				},
+				{
+					name: "Krentenbollen",
+					value: 1.49,
+					amount: 0
+				},
+				{
+					name: "Noten",
+					value: 0.99,
+					amount: 0
+				},
+			]
 		}
 	},
 	methods: {
