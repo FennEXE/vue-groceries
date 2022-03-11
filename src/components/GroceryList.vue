@@ -54,7 +54,12 @@ export default {
 					name: "Noten",
 					value: 0.99,
 					amount: 0
-				}
+				},
+				{
+					name: "Aardappelen",
+					value: 0.89,
+					amount: 0
+				},
 			]
 		}
 	},
@@ -80,6 +85,7 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
+
 h3 {
 	margin: 40px 0 0;
 }
@@ -94,7 +100,14 @@ li {
 a {
 	color: #42b983;
 }
+input {
+	background-color: rgb(65, 65, 65);
+	color: #a2bdd8;
+	font-size: 0.8em;
+	border-radius: 5px;
+}
 #groceryTable {
 	margin: 0 auto;
+	font-size: 2em;
 }
 </style>
