@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<h2>Vue Boodschappenopdracht</h2>
+		<h1>Vue Boodschappenopdracht</h1>
 		<table id="groceryTable">
 			<tr>
 				
@@ -86,7 +86,10 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped>
-
+div{
+	padding-top: 20px;
+	padding-bottom: 40px;
+}
 h3 {
 	margin: 40px 0 0;
 }

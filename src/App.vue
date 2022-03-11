@@ -28,5 +28,6 @@ body {
   background-color: rgb(37, 37, 37);
   color: #a2bdd8;
   margin-top: 60px;
+  border-radius: 25px;
 }
 </style>
