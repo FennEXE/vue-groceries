@@ -8,8 +8,12 @@
 				<th>Aantal</th>
 				<th>Subtotaal</th>
 			</tr>
-			<tr v-for"name in names" :key="names">
-				<td>{{name}}</td>
+			<!--
+			<tr v-for="product in products" :key="products">
+				<td>{{Name}}</td>
+				<td>{{value}}</td>
+				<td><input v-model="amount" type="number" value="0" /></td>
+				<td>{{subtotal}}</td>
 			</tr>
 			<tr>
 				<td>Brood</td>
@@ -39,6 +43,7 @@
 				<td colspan="3">Totaal</td>
 				<td>0</td>
 			</tr>
+			-->
 		</table>
 	</div>
 </template>
@@ -46,19 +51,21 @@
 <script>
 export default {
 	name: "GroceryList",
-	
+	data: 
+	{
+		products: {
+			name: ["Brood", "Broccoli", "Krentebollen", "Noten"],
+			value: [1.00, 0.99, 1.49, 0.99]
+		}
+  	},
+  	methods: {
+		calculateCost() 
+		{
+			return value[i] * price;
+		}
+  	}
 };
 
-new Vue({
-  el: "#Groceries",
-	data: 
-			names: ['Brood', 'Broccoli', 'Krentebollen', 'Noten'],
-			values: [1.00, 0.99, 1.99, 0.49]
-	},
-	computed: {
-		
-	},
-})
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
