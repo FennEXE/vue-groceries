@@ -3,47 +3,27 @@
 		<h2>Vue Boodschappenopdracht</h2>
 		<table id="groceryTable">
 			<tr>
+				
 				<th>Product</th>
 				<th>Prijs</th>
 				<th>Aantal</th>
 				<th>Subtotaal</th>
 			</tr>
 			<tr v-for="product in products" :key="product">
-				<td>{{Name}}</td>
-				<td>{{value}}</td>
-				<td><input v-model="amount" type="number" value="0" /></td>
-				<td>{{subTotal()}}</td>
-			</tr>
-			<!--
-			<tr>
-				<td>Brood</td>
-				<td>{{value[0]}}</td>
-				<td><input v-model="amount" type="number" value="0" /></td>
-				<td>0</td>
+				
+				<td>{{product.name}}</td>
+				<td>{{product.value.toFixed(2)}}</td>
+				<td><input v-model="product.amount" type="number" value="0" min="0" /></td>
+				<td>{{subTotal(product.value, product.amount)}}</td>
 			</tr>
 			<tr>
-				<td>Broccoli</td>
-				<td>{{value[1]}}</td>
-				<td><input v-model="amount" type="number" value="0" /></td>
-				<td>0</td>
+				<th colspan="3"></th>
+				<th>Totaal</th>
 			</tr>
 			<tr>
-				<td>Krentebollen</td>
-				<td>{{value[2]}}</td>
-				<td><input v-model="amount" type="number" value="0" /></td>
-				<td>0</td>
+				<td colspan="3"></td>
+				<td>{{total()}}</td>
 			</tr>
-			<tr>
-				<td>Noten</td>
-				<td>{{value[3]}}</td>
-				<td><input v-model="amount" type="number" /></td>
-				<td>{{price}}</td>
-			</tr>
-			<tr>
-				<td colspan="3">Totaal</td>
-				<td>0</td>
-			</tr>
-			-->
 		</table>
 	</div>
 </template>
@@ -58,7 +38,7 @@ export default {
 				{
 					name: "Brood",
 					value: 1.00,
-					amount: 0
+					amount: 0,
 				},
 				{
 					name: "Broccoli",
@@ -74,19 +54,27 @@ export default {
 					name: "Noten",
 					value: 0.99,
 					amount: 0
-				},
+				}
 			]
 		}
 	},
 	methods: {
-		subTotal() 
+		subTotal(value, amount) 
 		{
-			let amount;
-			let value;
-			return value * amount;
+			return (value * amount).toFixed(2);
+		},
+		total()
+		{
+			let fullprice = 0;
+			for(let i = 0; i < this.products.length; i++)
+			{
+				fullprice = fullprice + (this.products[i].value * this.products[i].amount);
+			}
+			return fullprice.toFixed(2);
 		}
 	}
 };
+
 
 </script>
 
