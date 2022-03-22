@@ -9,7 +9,7 @@
 				<th>Aantal</th>
 				<th>Subtotaal</th>
 			</tr>
-			<tr v-for="item in $store.state.items" :key="item">
+			<tr v-for="(item, i) in $store.state.items" :key="i">
 				
 				<td>{{item.name}}</td>
 				<td>{{item.value.toFixed(2)}}</td>
@@ -34,9 +34,6 @@
 <script>
 export default {
 	name: "GroceryList",
-	data() 
-	{
-	},
 	methods: {
 		subTotal(value, amount) 
 		{
@@ -47,7 +44,6 @@ export default {
 			let fullprice = 0;
 			for(let i = 0; i < things.length; i++)
 			{
-				console.log('a');
 				fullprice = fullprice + (things[i].value * things[i].amount);
 			}
 			return fullprice.toFixed(2);

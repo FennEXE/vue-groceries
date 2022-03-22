@@ -9,7 +9,6 @@ Vue.use(Vuex);
 
 const store = new Vuex.Store({
     state: {
-        count: 0,
         items: [{
                 name: "Brood",
                 value: 1.10,
@@ -37,18 +36,7 @@ const store = new Vuex.Store({
             },
         ]
     },
-    mutations: {
-        increment(state) {
-            state.count = 5
-        },
-        newItem(state, input1, input2) {
-            {
-                state.items.name = input1,
-                    state.items.value = input2,
-                    state.items.amount = 0
-            }
-        }
-    },
+    mutations: {},
 })
 
 
