@@ -11,7 +11,7 @@
 			</tr>
 			<tr v-for="(item, i) in $store.state.items" :key="i">
 				<td>{{item.name}}</td>
-				<td>{{item.value.toFixed(2)}}</td>
+				<td>{{item.value}}</td>
 				<td><input v-model="item.amount" type="number" value="0" min="0" oninput="this.value = 
  !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : 0" /></td>
 				<td>{{subTotal(item.value, item.amount)}}</td>
@@ -25,7 +25,10 @@
 				<td>{{total($store.state.items)}} </td>
 			</tr>
 		</table>
-		<button @click="newthing('peer', 0.89)">Yup</button>
+		<input v-model="itemname">
+		<input v-model="itemvalue" type="number" pattern="^\d*(\.\d{0,2})?$" value="0.01" min="0.01" step="0.01" oninput="this.value = 
+ !!this.value && Math.abs(this.value) >= 0.01 ? Math.abs(this.value) : 0.01" />
+		<button @click="newthing(itemname, itemvalue)">Add</button>
 	</div>
 		
 </template>
@@ -33,6 +36,12 @@
 <script>
 export default {
 	name: "GroceryList",
+	data() {
+		return {
+			itemname: '',
+			itemvalue: 0.01
+		}
+	},
 	methods: {
 		subTotal(value, amount) 
 		{
@@ -54,9 +63,9 @@ export default {
 		newthing(itemName, itemValue) {
 			this.$store.commit('newItem', {
 				name: itemName,
-				value: itemValue,
+				value: Number(itemValue).toFixed(2),
 				amount: 0});
-		}
+		},
 	}	
 };
 

@@ -9,32 +9,7 @@ Vue.use(Vuex);
 
 const store = new Vuex.Store({
     state: {
-        items: [{
-                name: "Brood",
-                value: 1.10,
-                amount: 0,
-            },
-            {
-                name: "Broccoli",
-                value: 1.79,
-                amount: 0
-            },
-            {
-                name: "Krentenbollen",
-                value: 1.50,
-                amount: 0
-            },
-            {
-                name: "Noten",
-                value: 0.99,
-                amount: 0
-            },
-            {
-                name: "Aardappelen",
-                value: 0.89,
-                amount: 0
-            },
-        ]
+        items: []
     },
     mutations: {
         newItem(state, payload) {
@@ -45,7 +20,7 @@ const store = new Vuex.Store({
 
 store.commit('newItem', {
     name: 'Appel',
-    value: 1.20,
+    value: 1.19.toFixed(2),
     amount: 0
 })
 
