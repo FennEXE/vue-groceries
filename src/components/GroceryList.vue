@@ -10,7 +10,6 @@
 				<th>Subtotaal</th>
 			</tr>
 			<tr v-for="(item, i) in $store.state.items" :key="i">
-				
 				<td>{{item.name}}</td>
 				<td>{{item.value.toFixed(2)}}</td>
 				<td><input v-model="item.amount" type="number" value="0" min="0" oninput="this.value = 
@@ -54,7 +53,6 @@ export default {
 		// }
 	},
 };
-
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->

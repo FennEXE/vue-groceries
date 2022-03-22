@@ -36,9 +36,16 @@ const store = new Vuex.Store({
             },
         ]
     },
-    mutations: {},
+    mutations: {
+        newItem(state, payload) {
+            state += {
+                name: payload.name,
+                value: payload.value,
+                amount: payload.amount
+            }
+        }
+    }
 })
-
 
 new Vue({
     store,
