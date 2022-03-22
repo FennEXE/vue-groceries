@@ -56,10 +56,6 @@ export default {
 			}
 			return fullprice.toFixed(2);
 		},
-		// addItem(name, value)
-		// {
-		// 	this.$store.commit(item)
-		// }
 		newthing(itemName, itemValue) {
 			this.$store.commit('newItem', {
 				name: itemName,
