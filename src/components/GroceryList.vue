@@ -25,7 +25,7 @@
 				<td>{{total($store.state.items)}} </td>
 			</tr>
 		</table>
-
+		<button @click="newthing('peer', 0.89)">Yup</button>
 	</div>
 		
 </template>
@@ -51,8 +51,16 @@ export default {
 		// {
 		// 	this.$store.commit(item)
 		// }
-	},
+		newthing(itemName, itemValue) {
+			this.$store.commit('newItem', {
+				name: itemName,
+				value: itemValue,
+				amount: 0});
+		}
+	}	
 };
+
+
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
