@@ -1,6 +1,7 @@
 <template>
   <div id="app">
     <grocery-list />
+
   </div>
 </template>
 
