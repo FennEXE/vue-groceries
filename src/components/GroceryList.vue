@@ -1,21 +1,20 @@
 <template>
 	<div>
 		<h1>Vue Boodschappenopdracht</h1>
+		{{products}}
 		<table id="groceryTable">
 			<tr>
-				{{console.log("a")}}
 				<th>Product</th>
 				<th>Prijs</th>
 				<th>Aantal</th>
 				<th>Subtotaal</th>
 			</tr>
-			<tr v-for="(item, i) in items" :key="i">
-				{{ console.log("b") }}
-				<td>{{item.name}}</td>
-				<td>{{item.value}}</td>
-				<td><input v-model="item.amount" type="number" value="0" min="0" oninput="this.value = 
+			<tr v-for="(product, i) in products" :key="i">
+				<td>{{product.name}}</td>
+				<td>{{product.value}}</td>
+				<td><input v-model="product.amount" type="number" value="0" min="0" oninput="this.value = 
  !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : 0" /></td>
-				<td>{{subTotal(item.value, item.amount)}}</td>
+				<td>{{(product.value * product.amount).toFixed(2)}}</td>
 			</tr>
 			<tr>
 				<th colspan="3"></th>
@@ -23,7 +22,7 @@
 			</tr>
 			<tr>
 				<td colspan="3"></td>
-				<!-- <td>{{total($store.state.items)}} </td> -->
+				<td>{{total(products)}} </td>
 			</tr>
 		</table>
 		<input v-model="itemname">
@@ -45,10 +44,6 @@ export default {
 		}
 	},
 	methods: {
-		subTotal(value, amount) 
-		{
-			return (value * amount).toFixed(2);
-		},
 		total(things)
 		{
 			let fullprice = 0;
@@ -64,10 +59,11 @@ export default {
 				value: Number(itemValue).toFixed(2),
 				amount: 0});
 		},
+
 	},
 	computed: {
 		products() {
-			return this.store.getters.productList
+			return this.$store.getters.productList
 		}
 	}	
 };

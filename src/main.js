@@ -14,5 +14,5 @@ console.log(store.getters.productList); //This gets "Appel, 1.19, 0"
 new Vue({
     store,
     render: h => h(App),
-})
+}).$mount('#app')
 
