@@ -54,7 +54,7 @@ export default {
 			return fullprice.toFixed(2);
 		},
 		newthing(itemName, itemValue) {
-			this.store.commit('newItem', {
+			this.$store.dispatch('addItem', {
 				name: itemName,
 				value: Number(itemValue).toFixed(2),
 				amount: 0});
