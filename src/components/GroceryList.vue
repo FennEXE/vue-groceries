@@ -1,7 +1,6 @@
 <template>
 	<div>
 		<h1>Vue Boodschappenopdracht</h1>
-		{{products}}
 		<table id="groceryTable">
 			<tr>
 				<th>Product</th>
@@ -53,13 +52,18 @@ export default {
 			}
 			return fullprice.toFixed(2);
 		},
+		// newthing(itemName, itemValue) {
+		// 	this.$store.dispatch('addItem', {
+		// 		name: itemName,
+		// 		value: Number(itemValue).toFixed(2),
+		// 		amount: 0});
+		// },
 		newthing(itemName, itemValue) {
 			this.$store.dispatch('addItem', {
-				name: itemName,
-				value: Number(itemValue).toFixed(2),
-				amount: 0});
+				name: itemName, 
+				value: itemValue
+			});
 		},
-
 	},
 	computed: {
 		products() {

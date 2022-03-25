@@ -19,7 +19,6 @@ export default new Vuex.Store({
     ]},
     mutations: {
         newItem(state, payload) {
-            console.log("B")
             state.items.push({
                 name: payload.name,
                 value: Number(payload.value).toFixed(2),
@@ -33,9 +32,8 @@ export default new Vuex.Store({
         }
     },
     actions: {
-        addItem({commit}) {
-            console.log(commit(name))
-            commit('newItem')
+        addItem({commit}, payload) {
+            commit('newItem', payload)
         }
     }
 });
