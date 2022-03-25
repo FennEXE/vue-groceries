@@ -13,7 +13,11 @@ export default new Vuex.Store({
     },
     mutations: {
         newItem(state, payload) {
-            state.items.push(payload)
+            state.items.push({
+                name: payload.name,
+                value: Number(payload.value).toFixed(2),
+                amount: 0
+            })
         }
     },
     getters: {
@@ -22,12 +26,8 @@ export default new Vuex.Store({
         }
     },
     actions: {
-        addItem({commit, itemName, itemValue}) {
-            commit('newItem', {
-                name: itemName,
-                value: Number(itemValue).toFixed(2),
-                amount: 0
-            })
+        addItem({commit}) {
+            commit('newItem')
         }
     }
 });

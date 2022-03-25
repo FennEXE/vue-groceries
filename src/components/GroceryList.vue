@@ -3,13 +3,14 @@
 		<h1>Vue Boodschappenopdracht</h1>
 		<table id="groceryTable">
 			<tr>
-				
+				{{console.log("a")}}
 				<th>Product</th>
 				<th>Prijs</th>
 				<th>Aantal</th>
 				<th>Subtotaal</th>
 			</tr>
-			<tr v-for="(item, i) in productList()" :key="i">
+			<tr v-for="(item, i) in items" :key="i">
+				{{ console.log("b") }}
 				<td>{{item.name}}</td>
 				<td>{{item.value}}</td>
 				<td><input v-model="item.amount" type="number" value="0" min="0" oninput="this.value = 
@@ -34,6 +35,7 @@
 </template>
 
 <script>
+
 export default {
 	name: "GroceryList",
 	data() {
@@ -62,6 +64,11 @@ export default {
 				value: Number(itemValue).toFixed(2),
 				amount: 0});
 		},
+	},
+	computed: {
+		products() {
+			return this.store.getters.productList
+		}
 	}	
 };
 
