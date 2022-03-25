@@ -4,27 +4,15 @@ import App from './App.vue'
 
 
 Vue.config.productionTip = false
-
 Vue.use(Vuex);
 
-const store = new Vuex.Store({
-    state: {
-        items: []
-    },
-    mutations: {
-        newItem(state, payload) {
-            state.items.push(payload)
-        }
-    }
-})
+//Import store
+import store from "./store";
 
-store.commit('newItem', {
-    name: 'Appel',
-    value: 1.19.toFixed(2),
-    amount: 0
-})
+
+store.addItem('Appel', 1.19);
 
 new Vue({
     store,
     render: h => h(App),
-}).$mount('#app')
+})

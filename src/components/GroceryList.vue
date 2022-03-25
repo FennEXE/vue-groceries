@@ -9,7 +9,7 @@
 				<th>Aantal</th>
 				<th>Subtotaal</th>
 			</tr>
-			<tr v-for="(item, i) in $store.state.items" :key="i">
+			<tr v-for="(item, i) in productList()" :key="i">
 				<td>{{item.name}}</td>
 				<td>{{item.value}}</td>
 				<td><input v-model="item.amount" type="number" value="0" min="0" oninput="this.value = 
@@ -22,11 +22,11 @@
 			</tr>
 			<tr>
 				<td colspan="3"></td>
-				<td>{{total($store.state.items)}} </td>
+				<!-- <td>{{total($store.state.items)}} </td> -->
 			</tr>
 		</table>
 		<input v-model="itemname">
-		<input v-model="itemvalue" type="number" pattern="^\d*(\.\d{0,2})?$" value="0.01" min="0.01" step="0.01" oninput="this.value = 
+		<input v-model="itemvalue" type="number" value="0.01" min="0.01" step="0.01" oninput="this.value = 
  !!this.value && Math.abs(this.value) >= 0.01 ? Math.abs(this.value) : 0.01" />
 		<button @click="newthing(itemname, itemvalue)">Add</button>
 	</div>
@@ -57,7 +57,7 @@ export default {
 			return fullprice.toFixed(2);
 		},
 		newthing(itemName, itemValue) {
-			this.$store.commit('newItem', {
+			this.store.commit('newItem', {
 				name: itemName,
 				value: Number(itemValue).toFixed(2),
 				amount: 0});
