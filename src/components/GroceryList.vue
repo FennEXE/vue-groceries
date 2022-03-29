@@ -1,5 +1,6 @@
 <template>
 	<div>
+		<div v-if="formvisible == 0">
 		<h1>Vue Boodschappenopdracht</h1>
 		<table id="groceryTable">
 			<tr>
@@ -7,13 +8,15 @@
 				<th>Prijs</th>
 				<th>Aantal</th>
 				<th>Subtotaal</th>
+				<th>Opties</th>
 			</tr>
 			<tr v-for="(product, i) in products" :key="i">
 				<td>{{product.name}}</td>
 				<td>{{product.value}}</td>
 				<td><input v-model="product.amount" type="number" value="0" min="0" oninput="this.value = 
- !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : 0" /></td>
+ !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : 0" @click="refresh()" /></td>
 				<td>{{(product.value * product.amount).toFixed(2)}}</td>
+				<td><button @click="deleteProduct(i)">Delete</button><button @click="editProduct(i)">Edit</button></td>
 			</tr>
 			<tr>
 				<th colspan="3"></th>
@@ -27,9 +30,16 @@
 		<input v-model="itemname">
 		<input v-model="itemvalue" type="number" value="0.01" min="0.01" step="0.01" oninput="this.value = 
  !!this.value && Math.abs(this.value) >= 0.01 ? Math.abs(this.value) : 0.01" />
-		<button @click="newthing(itemname, itemvalue)">Add</button>
+		<button @click="newthing(itemname, itemvalue)">Add</button>	
+		</div>
+		<div v-if="formvisible == 1">
+			<input v-model="itemname">
+			<input v-model="itemprice" type="number" value="0.01" min="0.01" step="0.01" oninput="this.value = 
+ !!this.value && Math.abs(this.value) >= 0.01 ? Math.abs(this.value) : 0.01" />
+			<button @click="editDone()">Done</button>
+		</div>	
 	</div>
-		
+	
 </template>
 
 <script>
@@ -38,8 +48,12 @@ export default {
 	name: "GroceryList",
 	data() {
 		return {
+			refreshKey: false,
+			itemId: null,
+			formvisible: 0,
 			itemname: '',
-			itemvalue: 0.01
+			itemvalue: 0.01,
+			itemprice: '',
 		}
 	},
 	methods: {
@@ -58,9 +72,32 @@ export default {
 				value: itemValue
 			});
 		},
+		deleteProduct(product) {
+			this.$store.dispatch('deleteItem', product);
+		},
+		editProduct(product) {
+			this.itemname = this.products[product].name;
+			this.itemprice = this.products[product].value;
+			this.itemId = product;
+			this.formvisible = 1;
+		},
+		editDone() {
+			this.$store.dispatch('editItem', {
+				id: this.itemId, 
+				name: this.itemname, 
+				value: this.itemprice});
+			this.itemname = '';
+			this.itemprice = 0.01;
+			this.itemId = null
+			this.formvisible = 0;
+		},
+		refresh() {
+			this.refreshKey = !this.refreshKey;
+		}
 	},
 	computed: {
 		products() {
+			this.refreshKey;
 			return this.$store.getters.productList
 		}
 	}	
@@ -101,4 +138,10 @@ input {
 	margin: 0 auto;
 	font-size: 2em;
 }
+
+td{
+	min-width: 120px;
+}
+
+
 </style>
