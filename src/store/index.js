@@ -42,8 +42,8 @@ export default new Vuex.Store({
             console.log(state.items[payload.id]);
             state.items[payload.id] = {
                 name: payload.name,
+                value: Number(payload.value).toFixed(2),
                 amount: 0,
-                value: Number(payload.value).toFixed(2)
             };
             console.log(state.items[payload.id]);
         }
