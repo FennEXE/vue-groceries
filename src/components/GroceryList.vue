@@ -10,12 +10,12 @@
 				<th>Subtotaal</th>
 				<th>Opties</th>
 			</tr>
-			<tr v-for="(product, i) in products" :key="i">
-				<td>{{product.name}}</td>
-				<td>{{product.value}}</td>
-				<td><input v-model="counter[i]" value="0" type="number" min="0" oninput="this.value = 
+			<tr v-for="(product, i) in products" :key="i">	
+				<td>{{productList[i].name}}</td>
+				<td>{{productList[i].value}}</td>
+				<td><input v-model="productList[i].amount" value="0" placeholder="0" type="number" min="0" oninput="this.value = 
  !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : 0" /></td>
-				<td>{{stopNan(product.value, counter[i])}}</td>
+				<td>{{stopNan(productList[i].value, productList[i].amount)}}</td>
 				<td><button @click="deleteProduct(i)">Delete</button><button @click="editProduct(i)">Edit</button></td>
 			</tr>
 			<tr>
@@ -24,7 +24,7 @@
 			</tr>
 			<tr>
 				<td colspan="3"></td>
-				<td>{{total(products)}} </td>
+				<td>{{total(productList)}} </td>
 			</tr>
 		</table>
 		<input v-model="itemname">
@@ -35,7 +35,7 @@
 		<div v-if="formvisible == 1">
 			<input v-model="itemname">
 			<input v-model="itemprice" type="number" value="0.01" min="0.01" step="0.01"  />
-			<button @click="editDone()">Done</button>
+			<button @click="editDone(itemId)">Done</button>
 		</div>	
 	</div>
 	
@@ -47,7 +47,7 @@ export default {
 	name: "GroceryList",
 	data() {
 		return {
-			counter: [],
+			productList: [],
 			itemId: null,
 			formvisible: 0,
 			itemname: '',
@@ -56,7 +56,7 @@ export default {
 		}
 	},
 	methods: {
-		total(things)
+		total(things) //TODO: This needs a change
 		{
 			let fullprice = 0;
 			for(let i = 0; i < things.length; i++)
@@ -70,36 +70,58 @@ export default {
 				name: itemName, 
 				value: itemValue
 			});
+			this.productList + {
+				name: itemName,
+				value: Number(itemValue).toFixed(2),
+				amount: 0
+				};
 		},
 		deleteProduct(product) {
-			this.counter.splice(product, product);
 			this.$store.dispatch('deleteItem', product);
 		},
 		editProduct(product) {
-			this.itemname = this.products[product].name;
-			this.itemprice = this.products[product].value;
+			this.itemname = this.productList[product].name;
+			this.itemprice = this.productList[product].value;
 			this.itemId = product;
 			this.formvisible = 1;
 		},
-		editDone() {
+		editDone(i) {
 			this.$store.dispatch('editItem', {
-				id: this.itemId, 
+				id: i, 
 				name: this.itemname, 
 				value: this.itemprice});
+			this.productList[i] = {
+				name: this.itemname, 
+				value: Number(this.itemprice).toFixed(2),
+				amount: 0
+			};
+			console.log(this.productList[i]);
 			this.itemname = '';
 			this.itemprice = 0.01;
 			this.itemId = null
-			this.formvisible = 0;
+			this.formvisible = 0;	
 		},
 		stopNan(value, amount) {
 			if(isNaN(amount) == true) {
 				amount = 0;
 			}
 			return Number(value * amount).toFixed(2)
+		},
+		fillProduct(products) {
+			
+			this.productList = JSON.parse(JSON.stringify(products));
+			console.log(this.productList);
+		},
+		productAmount(i) {
+			console.log("e")
+			return this.productList[i].amount;
+			
 		}
 	},
 	computed: {
 		products() {
+			const productlist = [...this.$store.getters.productList]
+			this.fillProduct(productlist);
 			return this.$store.getters.productList;
 		}
 	}	
