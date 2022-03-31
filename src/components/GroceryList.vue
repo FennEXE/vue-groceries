@@ -47,8 +47,6 @@ export default {
 	name: "GroceryList",
 	data() {
 		return {
-			rerenderKey: 0,
-			firstload: 1,
 			productList: [],
 			itemId: null,
 			formvisible: 0,
@@ -72,11 +70,6 @@ export default {
 				name: itemName, 
 				value: itemValue
 			});
-			this.productList + {
-				name: itemName,
-				value: Number(itemValue).toFixed(2),
-				amount: 0
-				};
 		},
 		deleteProduct(product) {
 			this.$store.dispatch('deleteItem', product);
@@ -92,11 +85,6 @@ export default {
 				id: i, 
 				name: this.itemname, 
 				value: this.itemprice});
-			this.productList[i] = {
-				name: this.itemname, 
-				value: Number(this.itemprice).toFixed(2),
-				amount: 0
-			};
 			console.log(this.productList[i]);
 			this.itemname = '';
 			this.itemprice = 0.01;
