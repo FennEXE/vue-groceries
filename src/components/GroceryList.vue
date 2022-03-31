@@ -13,9 +13,9 @@
 			<tr v-for="(product, i) in products" :key="i">
 				<td>{{product.name}}</td>
 				<td>{{product.value}}</td>
-				<td><input v-model="product.amount" type="number" value="0" min="0" oninput="this.value = 
- !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : 0" @click="refresh()" /></td>
-				<td>{{(product.value * product.amount).toFixed(2)}}</td>
+				<td><input v-model="counter[i]" value="0" type="number" min="0" oninput="this.value = 
+ !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : 0" /></td>
+				<td>{{stopNan(product.value, counter[i])}}</td>
 				<td><button @click="deleteProduct(i)">Delete</button><button @click="editProduct(i)">Edit</button></td>
 			</tr>
 			<tr>
@@ -34,8 +34,7 @@
 		</div>
 		<div v-if="formvisible == 1">
 			<input v-model="itemname">
-			<input v-model="itemprice" type="number" value="0.01" min="0.01" step="0.01" oninput="this.value = 
- !!this.value && Math.abs(this.value) >= 0.01 ? Math.abs(this.value) : 0.01" />
+			<input v-model="itemprice" type="number" value="0.01" min="0.01" step="0.01"  />
 			<button @click="editDone()">Done</button>
 		</div>	
 	</div>
@@ -48,7 +47,7 @@ export default {
 	name: "GroceryList",
 	data() {
 		return {
-			refreshKey: false,
+			counter: [],
 			itemId: null,
 			formvisible: 0,
 			itemname: '',
@@ -73,6 +72,7 @@ export default {
 			});
 		},
 		deleteProduct(product) {
+			this.counter.splice(product, product);
 			this.$store.dispatch('deleteItem', product);
 		},
 		editProduct(product) {
@@ -91,14 +91,16 @@ export default {
 			this.itemId = null
 			this.formvisible = 0;
 		},
-		refresh() {
-			this.refreshKey = !this.refreshKey;
+		stopNan(value, amount) {
+			if(isNaN(amount) == true) {
+				amount = 0;
+			}
+			return Number(value * amount).toFixed(2)
 		}
 	},
 	computed: {
 		products() {
-			this.refreshKey;
-			return this.$store.getters.productList
+			return this.$store.getters.productList;
 		}
 	}	
 };

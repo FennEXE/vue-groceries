@@ -4,6 +4,7 @@ import Vuex from "vuex";
 Vue.use(Vuex);
 
 export default new Vuex.Store({
+    strict: true,
     state: {
         items: [{
                 name: "Appel",
@@ -32,20 +33,17 @@ export default new Vuex.Store({
         },
         removeItem(state, payload) {
             let filter;
-            console.log(state.items);
             filter = state.items.filter(things => things != state.items[payload]);
-            console.log(filter);
             state.items = filter;
 
         },
         changeItem(state, payload) {
-            console.log(state.items[payload.id]);
             state.items[payload.id] = {
                 name: payload.name,
                 value: Number(payload.value).toFixed(2),
                 amount: 0,
             };
-            console.log(state.items[payload.id]);
+            
         }
     },
     getters: {
