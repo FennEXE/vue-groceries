@@ -47,6 +47,8 @@ export default {
 	name: "GroceryList",
 	data() {
 		return {
+			rerenderKey: 0,
+			firstload: 1,
 			productList: [],
 			itemId: null,
 			formvisible: 0,
@@ -99,7 +101,7 @@ export default {
 			this.itemname = '';
 			this.itemprice = 0.01;
 			this.itemId = null
-			this.formvisible = 0;	
+			this.formvisible = 0;
 		},
 		stopNan(value, amount) {
 			if(isNaN(amount) == true) {
@@ -108,22 +110,19 @@ export default {
 			return Number(value * amount).toFixed(2)
 		},
 		fillProduct(products) {
-			
 			this.productList = JSON.parse(JSON.stringify(products));
-			console.log(this.productList);
-		},
-		productAmount(i) {
-			console.log("e")
-			return this.productList[i].amount;
-			
+			//console.log(this.productList);
 		}
 	},
 	computed: {
 		products() {
 			const productlist = [...this.$store.getters.productList]
 			this.fillProduct(productlist);
-			return this.$store.getters.productList;
+			return this.productList;
 		}
+	},
+	watch: {
+
 	}	
 };
 
