@@ -24,6 +24,13 @@ export default new Vuex.Store({
         ]
     },
     mutations: {
+        amountchange(state, payload){
+            state.items[payload.id] = {
+                name: state.items[payload.id].name,
+                value: Number(state.items[payload.id].value).toFixed(2),
+                amount: payload.amount
+            }
+        },
         newItem(state, payload) {
             state.items.push({
                 name: payload.name,
@@ -60,6 +67,9 @@ export default new Vuex.Store({
         },
         editItem({ commit }, payload) {
             commit('changeItem', payload)
+        },
+        changeAmount({commit}, payload) {
+            commit('amountchange', payload);
         }
     }
 });

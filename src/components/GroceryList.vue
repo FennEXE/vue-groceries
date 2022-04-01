@@ -14,7 +14,7 @@
 				<td>{{productList[i].name}}</td>
 				<td>{{productList[i].value}}</td>
 				<td><input v-model="productList[i].amount" value="0" placeholder="0" type="number" min="0" oninput="this.value = 
- !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : 0" /></td>
+ !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : 0" v-on:change="amount(i, productList[i].amount)"/></td>
 				<td>{{stopNan(productList[i].value, productList[i].amount)}}</td>
 				<td><button @click="deleteProduct(i)">Delete</button><button @click="editProduct(i)">Edit</button></td>
 			</tr>
@@ -56,8 +56,11 @@ export default {
 		}
 	},
 	methods: {
-		startup() {
-			this.products();
+		amount(id, i) {
+			this.$store.dispatch('changeAmount', {
+				id: id,
+				amount: i
+			})
 		},
 		total(things) //TODO: This needs a change
 		{
