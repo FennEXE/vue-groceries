@@ -121,12 +121,6 @@ export default {
 			this.fillProduct(productlist);
 			return this.productList;
 		}
-	},
-	watch: {
-		productList: function (newValue, oldValue) {
-			console.log(oldValue);
-			console.log(newValue);
-		}
 	}	
 };
 
