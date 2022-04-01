@@ -15,7 +15,7 @@
 				<td>{{productList[i].value}}</td>
 				<td><input v-model="productList[i].amount" value="0" placeholder="0" type="number" min="0" oninput="this.value = 
  !!this.value && Math.abs(this.value) >= 0 ? Math.abs(this.value) : 0" v-on:change="amount(i, productList[i].amount)"/></td>
-				<td>{{stopNan(productList[i].value, productList[i].amount)}}</td>
+				<td>{{stopNan(productList[i].value, productList[i].amount, i)}}</td>
 				<td><button @click="deleteProduct(i)">Delete</button><button @click="editProduct(i)">Edit</button></td>
 			</tr>
 			<tr>
@@ -24,7 +24,7 @@
 			</tr>
 			<tr>
 				<td colspan="3"></td>
-				<td>{{total(productList)}} </td>
+				<td>{{total()}} </td>
 			</tr>
 		</table>
 		<input v-model="itemname">
@@ -50,6 +50,7 @@ export default {
 			productList: [],
 			itemId: null,
 			formvisible: 0,
+			subtotal: [],
 			itemname: '',
 			itemvalue: 0.01,
 			itemprice: '',
@@ -63,14 +64,10 @@ export default {
 				amount: i
 			})
 		},
-		total(things) //TODO: This needs a change
+		total()
 		{
-			let fullprice = 0;
-			for(let i = 0; i < things.length; i++)
-			{
-				fullprice = fullprice + (things[i].value * things[i].amount);
-			}
-			return fullprice.toFixed(2);
+			const math = this.productList.reduce((total, product) => (product.value*product.amount) + total, 0);
+			return Number(math).toFixed(2);
 		},
 		newthing(itemName, itemValue) {
 			this.$store.dispatch('addItem', {
@@ -107,11 +104,12 @@ export default {
 			this.itemId = null
 			this.formvisible = 0;
 		},
-		stopNan(value, amount) {
+		stopNan(value, amount, i) {
 			if(isNaN(amount) == true) {
 				amount = 0;
 			}
-			return Number(value * amount).toFixed(2)
+			this.subtotal[i] = Number(value * amount).toFixed(2)
+			return Number(this.subtotal[i]).toFixed(2);
 		},
 		fillProduct(products) {
 			this.productList = JSON.parse(JSON.stringify(products));
