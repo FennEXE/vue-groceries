@@ -1,6 +1,6 @@
 <template>
 	<div>
-		<div v-if="formvisible == 0">
+		<div v-if="formVisible == 0">
 		<h1>Vue Boodschappenopdracht</h1>
 		<table id="groceryTable">
 			<tr>
@@ -27,14 +27,14 @@
 				<td>{{total()}} </td>
 			</tr>
 		</table>
-		<input v-model="itemname">
-		<input v-model="itemvalue" type="number" value="0.01" min="0.01" step="0.01" oninput="this.value = 
+		<input v-model="itemName">
+		<input v-model="itemValue" type="number" value="0.01" min="0.01" step="0.01" oninput="this.value = 
  !!this.value && Math.abs(this.value) >= 0.01 ? Math.abs(this.value) : 0.01" />
-		<button @click="newthing(itemname, itemvalue)">Add</button>	
+		<button @click="createProduct()">Add</button>	
 		</div>
-		<div v-if="formvisible == 1">
-			<input v-model="itemname">
-			<input v-model="itemprice" type="number" value="0.01" min="0.01" step="0.01"  />
+		<div v-if="formVisible == 1">
+			<input v-model="itemName">
+			<input v-model="itemPrice" type="number" min="0.01" step="0.01"  />
 			<button @click="editDone(itemId)">Done</button>
 		</div>	
 	</div>
@@ -49,82 +49,84 @@ export default {
 		return {
 			productList: [],
 			itemId: null,
-			formvisible: 0,
-			subtotal: [],
-			itemname: '',
-			itemvalue: 0.01,
-			itemprice: '',
-			itemamount: 0,
+			formVisible: false,
+			subTotal: [],
+			itemName: '',
+			itemValue: null,
+			itemPrice: null,
+			itemAmount: null,
 		}
 	},
 	methods: {
+		//Sends a dispatch to mutate the amount of a product in the store index.js
 		amount(id, i) {
 			this.$store.dispatch('changeAmount', {
 				id: id,
 				amount: i
 			})
 		},
+		//Counts the total price of all products.
 		total()
 		{
-			const math = this.productList.reduce((total, product) => (product.value*product.amount) + total, 0);
-			return Number(math).toFixed(2);
+			return this.productList.reduce((total, product) => (product.value*product.amount) + total, 0).toFixed(2);
 		},
-		newthing(itemName, itemValue) {
+		//Adds a new product to the list
+		createProduct() {
 			this.$store.dispatch('addItem', {
-				name: itemName, 
-				value: itemValue
+				name: this.itemName, 
+				value: this.itemValue
 			});
 		},
+		//Deletes a product from the list
 		deleteProduct(product) {
 			this.$store.dispatch('deleteItem', product);
 		},
+		//opens up the edit menu for a product.
 		editProduct(product) {
-			this.itemname = this.productList[product].name;
-			this.itemprice = this.productList[product].value;
-			this.itemamount = this.productList[product].amount;
+			this.itemName = this.productList[product].name;
+			this.itemPrice = this.productList[product].value;
+			this.itemAmount = this.productList[product].amount;
 			this.itemId = product;
-			this.formvisible = 1;
+			this.formVisible = true;
 		},
+		//Sends the edit to store/index.js
 		editDone(i) {
 			this.$store.dispatch('editItem', {
 				id: i, 
-				name: this.itemname, 
-				value: this.itemprice});
-				this.$set(this.productList[i], 'amount', this.itemamount);
-				this.$set(this.productList[i], 'name', this.itemname);
-				this.$set(this.productList[i], 'value', Number(this.itemprice).toFixed(2));
-				// this.productList[i] += {
-
-				// 	value: Number(this.itemprice).toFixed(2),
-				// };
+				name: this.itemName, 
+				value: this.itemPrice});
 				
-			
-			this.itemname = '';
-			this.itemprice = 0.01;
+			this.$set(this.productList[i], 'amount', this.itemAmount);
+			this.$set(this.productList[i], 'name', this.itemName);
+			this.$set(this.productList[i], 'value', Number(this.itemPrice).toFixed(2));
+
+			this.itemName = '';
+			this.itemPrice = 0.01;
 			this.itemId = null
-			this.formvisible = 0;
+			this.formVisible = false;
 		},
+		//Ensures the value is a number.
 		stopNan(value, amount, i) {
 			if(isNaN(amount) == true) {
 				amount = 0;
 			}
-			this.subtotal[i] = Number(value * amount).toFixed(2)
-			return Number(this.subtotal[i]).toFixed(2);
+			this.subTotal[i] = Number(value * amount).toFixed(2)
+			return Number(this.subTotal[i]).toFixed(2);
 		},
+		//Fills up the product list into Data to prevent the state being altered.
 		fillProduct(products) {
 			this.productList = JSON.parse(JSON.stringify(products));
 		}
 	},
 	computed: {
+		//Product getter for store/index.js
 		products() {
-			const productlist = [...this.$store.getters.productList]
-			this.fillProduct(productlist);
+			const productGetter = [...this.$store.getters.productList]
+			this.fillProduct(productGetter);
 			return this.productList;
 		}
 	}	
 };
-
-
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
@@ -163,6 +165,4 @@ input {
 td{
 	min-width: 120px;
 }
-
-
 </style>
