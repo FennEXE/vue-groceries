@@ -56,6 +56,9 @@ export default {
 		}
 	},
 	methods: {
+		startup() {
+			this.products();
+		},
 		total(things) //TODO: This needs a change
 		{
 			let fullprice = 0;
@@ -85,7 +88,11 @@ export default {
 				id: i, 
 				name: this.itemname, 
 				value: this.itemprice});
-			console.log(this.productList[i]);
+				this.productList[i] = {
+					name: this.itemname,
+					value: Number(this.itemprice).toFixed(2),
+				};
+			this.$set(this.productList, 'amount', 0);
 			this.itemname = '';
 			this.itemprice = 0.01;
 			this.itemId = null
@@ -99,7 +106,6 @@ export default {
 		},
 		fillProduct(products) {
 			this.productList = JSON.parse(JSON.stringify(products));
-			//console.log(this.productList);
 		}
 	},
 	computed: {
@@ -110,7 +116,10 @@ export default {
 		}
 	},
 	watch: {
-
+		productList: function (newValue, oldValue) {
+			console.log(oldValue);
+			console.log(newValue);
+		}
 	}	
 };
 
