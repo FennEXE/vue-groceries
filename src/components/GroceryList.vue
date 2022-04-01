@@ -53,6 +53,7 @@ export default {
 			itemname: '',
 			itemvalue: 0.01,
 			itemprice: '',
+			itemamount: 0,
 		}
 	},
 	methods: {
@@ -83,6 +84,7 @@ export default {
 		editProduct(product) {
 			this.itemname = this.productList[product].name;
 			this.itemprice = this.productList[product].value;
+			this.itemamount = this.productList[product].amount;
 			this.itemId = product;
 			this.formvisible = 1;
 		},
@@ -91,11 +93,15 @@ export default {
 				id: i, 
 				name: this.itemname, 
 				value: this.itemprice});
-				this.productList[i] = {
-					name: this.itemname,
-					value: Number(this.itemprice).toFixed(2),
-				};
-			this.$set(this.productList, 'amount', 0);
+				this.$set(this.productList[i], 'amount', this.itemamount);
+				this.$set(this.productList[i], 'name', this.itemname);
+				this.$set(this.productList[i], 'value', Number(this.itemprice).toFixed(2));
+				// this.productList[i] += {
+
+				// 	value: Number(this.itemprice).toFixed(2),
+				// };
+				
+			
 			this.itemname = '';
 			this.itemprice = 0.01;
 			this.itemId = null
