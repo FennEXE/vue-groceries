@@ -44,10 +44,7 @@ export default new Vuex.Store({
         },
         //Removes an item
         removeItem(state, payload) {
-            let filter;
-            filter = state.items.filter(product => product != state.items[payload]);
-            state.items = filter;
-
+            state.items = state.items.filter(product => product != state.items[payload]);
         },
         //Changes the value or name of a product, keeps the amount.
         changeItem(state, payload) {

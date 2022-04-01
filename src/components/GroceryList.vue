@@ -52,7 +52,7 @@ export default {
 			formVisible: false,
 			subTotal: [],
 			itemName: '',
-			itemValue: null,
+			itemValue: 1.99,
 			itemPrice: null,
 			itemAmount: null,
 		}
